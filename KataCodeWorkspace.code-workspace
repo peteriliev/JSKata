@@ -1,0 +1,19 @@
+    "settings": {
+        "eslint.run": "onSave",
+        "workbench.statusBar.feedback.visible": false,
+        "eslint.options":
+        {
+            "configFile": "C:/Projects2/pmi/cartridges/app_storefront_controllers/cartridge/.eslintrc.json"
+        },
+        "eslint.alwaysShowStatus": true,
+    
+        "editor.renderControlCharacters": false,
+        "editor.renderWhitespace": "none",
+    
+        "eslint.nodePath": "C:/Users/petar.iliev/AppData/Roaming/npm/node_modules",
+        "folders": [
+            {
+                "path": "."
+            }
+        ]
+    }
