@@ -140,14 +140,28 @@ describe('Array', function () {
     });
 
     describe('americanFlagSort', function () {
-        it('Array should be sorted', function () {
-            // var unsorted = [20, 18, 0, 19, -55, 40, 13, 5, 4, 3, 19, 34, 0, 9320932, 55, 832, 17, 0, 44, 33, -40, 414, 413, 412, 400];
-            var unsorted = [20, 18, 0];
-            console.log(unsorted);
 
-            const americanFlagSort = require('./AmericanFlagSort');
-            americanFlagSort(unsorted);
-            console.log(unsorted);
+        it('Array should be sorted', function () {
+
+            var sets = helper.getTestSets(), set;
+            //sets = [{ sorted: [0, 90, 91, 100], unsorted: [100, 0, 91, 90] }];
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const americanFlagSort = require('./AmericanFlagSort');
+
+                americanFlagSort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 

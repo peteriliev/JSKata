@@ -1,71 +1,67 @@
+'use strict';
+
+var NUM_BUCKETS = 10;
+
 function sort(a) {
 
-    var min = a.sort(function(a, b) {
-        return a - b;
-    })[0];
+    var min = a.sort(function (a, b) { return a - b; })[0],
+        max = a.sort(function (a, b) { return b - a; })[0],
+        i, radix, len = a.length, maxLen,
+        maxNormalized = max - min;
 
-    var max = a.sort(function(a, b) {
-        return b - a;
-    })[0];
+    maxLen = Math.floor(Math.log10(maxNormalized)) + 1;
 
-    var maxNormalized = max - min;
-    var maxLen = Math.floor(Math.log10(maxNormalized)) + 1;
+    for (i = 0; i < len; i++) {
+        a[i] -= min;
+    }
 
-    // console.info('Max = ' + max + '; min = ' + min + '; maxLen = ' + maxLen);
+    sortInternal(a, 0, len, maxLen);
 
-    sortInternal(a, 0, a.length, maxLen, min);
+    for (i = 0; i < len; i++) {
+        a[i] += min;
+    }
 }
 
-function sortInternal(a, start, end, radix, min) {
+function sortInternal(a, start, end, radix) {
 
-    var num, counts, offsets, offset, significant, target, tmp, from, to;
+    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], offsets = [start, 0, 0, 0, 0, 0, 0, 0, 0, 0], i, significant, b, num, tmp, from, to, offset, s, e;
 
-    counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], offsets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    for (var i = start; i < end; i++) {
-        significant = getSignificant(a[i] - min, radix);
-        counts[significant] += 1;
+    for (i = start; i < end; i++) {
+        significant = getSignificant(a[i], radix);
+        counts[significant]++;
     }
 
-    offsets[0] = start;
-    for (var j = 1; j < 10; j++) {
-        offsets[j] = counts[j - 1] + offsets[j - 1];
+    for (i = 1; i < NUM_BUCKETS; i++) {
+        offsets[i] = offsets[i - 1] + counts[i - 1];
     }
-    // console.info('\n\nRadix = ' + radix + '; start = ' + start + '; end = ' + end + ' counts =' + counts + '; offsets = ' + offsets);
-    // console.info('a = ' + a);
 
-    for (var b = 0; b < 10; b++) {
-
+    for (b = 0; b < NUM_BUCKETS; b++) {
         while (counts[b] > 0) {
-            offset = offsets[b];
-            from = offset;
-            num = a[offset];
+            offset = offsets[b], from = offset, num = a[from];
 
             do {
-                significant = getSignificant(num - min, radix);
+                significant = getSignificant(num, radix);
                 to = offsets[significant];
                 tmp = a[to];
-                // console.info('\nIN: num = ' + num + '; significant = ' + significant + '; from = ' + from + '; to = ' + to + '; tmp = ' + tmp + ';\n counts = ' + counts + '; offsets = ' + offsets);
 
+                a[to] = num;
                 offsets[significant]++;
                 counts[significant]--;
 
-                a[to] = num;
-                from = to;
                 num = tmp;
+                from = to;
+            } while (from !== offset);
 
-                // console.info('OUT: num = ' + num + '; significant = ' + significant + '; from = ' + from + '; to = ' + to + '; tmp = ' + tmp + ';\n counts = ' + counts + '; offsets = ' + offsets);
-            } while (from != offset);
         }
     }
 
     if (radix > 1) {
-        radix -= 1;
-        for (b = 0; b < 10; b++) {
-            var s1 = b == 0 ? start : offsets[b - 1];
-            var e1 = offsets[b];
-            if (e1 - s1 > 1) {
-                sortInternal(a, s1, e1, radix, min);
+
+        for (b = 0; b < NUM_BUCKETS; b++) {
+            s = b === 0 ? start : offsets[b - 1];
+            e = offsets[b];
+            if (e - s > 1) {
+                sortInternal(a, s, e, radix - 1);
             }
         }
     }
@@ -73,9 +69,9 @@ function sortInternal(a, start, end, radix, min) {
 
 function getSignificant(num, radix) {
 
-    var divisor = Math.pow(10, radix - 1);
+    var divisor = Math.pow(NUM_BUCKETS, radix - 1);
 
-    return Math.floor(num / divisor) % 10;
+    return Math.floor(num / divisor) % NUM_BUCKETS;
 }
 
 module.exports = sort;
