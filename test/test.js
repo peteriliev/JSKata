@@ -3,7 +3,7 @@ var helper = require('./TestHelper');
 
 describe('Array', function () {
 
-    describe('bubbleSort1', function () {
+    describe('bubbleSort', function () {
 
         it('Array should be sorted', function () {
 
@@ -106,12 +106,26 @@ describe('Array', function () {
 
     describe('countingSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            console.log(unsorted);
 
-            const countingSort = require('./CountingSort');
-            countingSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+            //sets = [{ sorted: [0, 90, 91, 100], unsorted: [100, 0, 91, 90] }];
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const countingSort = require('./CountingSort');
+
+                countingSort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
@@ -128,14 +142,27 @@ describe('Array', function () {
     });
 
     describe('radixSort', function () {
-        it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            // var unsorted = [2, 11, 1, 12];
-            console.log(unsorted);
 
-            const radixSort = require('./RadixSort');
-            radixSort(unsorted);
-            console.log(unsorted);
+        it('Array should be sorted', function () {
+
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const radixSort = require('./RadixSort');
+
+                radixSort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 

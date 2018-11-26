@@ -1,28 +1,32 @@
+'use strict';
+
 function CountingSort(a) {
+  var min = a.sort(function (a, b) { return a - b; })[0],
+    max = a.sort(function (a, b) { return b - a; })[0],
+    counts = [], count, i, j, offset, num;
 
-  var min = a.sort(function (a, b) { return a - b;})[0],
-      max = a.sort(function (a, b) { return b - a;})[0],
-      tmp = [];
-
-
-  for (var i = 0, len = a.length; i < len; i++) {
-    if (tmp[a[i] - min] === undefined) {
-        tmp[a[i] - min] = 1;
+  for (i = 0; i < a.length; i++) {
+    num = a[i] - min;
+    if (typeof counts[num] === 'undefined') {
+      counts[num] = 1;
     } else {
-      tmp[a[i] - min]++;
+      counts[num]++;
     }
   }
 
-  var aindex = 0;
-  for (var j = 0, lenj = tmp.length; j < lenj; j++) {
-    if (tmp[j] === undefined) {
+  offset = 0;
+  for (i = 0; i < counts.length; i++) {
+    if (typeof counts[i] === 'undefined') {
       continue;
     }
-    var elem = j + min, count = tmp[j];
-    while (count-- > 0) {
-      a[aindex++] = elem;
+    count = counts[i];
+
+    for (j = 0; j < count; j++) {
+      a[offset++] = i + min;
     }
   }
+
+
 }
 
 module.exports = CountingSort;
