@@ -6,4 +6,4 @@ function swap(a, x, y) {
     a[y] = tmp;
 }
 
-module.exports = swap;
+exports.swap = swap;

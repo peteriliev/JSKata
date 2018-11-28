@@ -1,14 +1,13 @@
+'use strict';
+var util = require('./Util');
+
 function ShellSort(a) {
+    var gaps = [701, 301, 132, 57, 23, 10, 4, 1], gap, g, i, index, insertMe;
 
-    var gap, gaps = [701, 301, 132, 57, 23, 10, 4, 1],
-        len = a.length,
-        insertMe, index;
-
-
-    for (var g = 0, glen = gaps.length; g < glen; g++) {
+    for (g = 0; g < gaps.length; g++) {
         gap = gaps[g];
 
-        for (var i = gap; i < len; i++) {
+        for (i = gap; i < a.length; i++) {
             insertMe = a[i], index = i - gap;
             while (index >= 0 && a[index] > insertMe) {
                 a[index + gap] = a[index];

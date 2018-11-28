@@ -1,9 +1,8 @@
+'use strict';
+var util = require('./Util');
+
 function CombSort(a) {
-    var len = a.length,
-        gap = len,
-        swapped = false,
-        i,
-        tmp;
+    var gap = a.length, swapped = false, i;
 
     while (gap > 1 || swapped) {
         gap = Math.floor(gap / 1.3);
@@ -11,11 +10,10 @@ function CombSort(a) {
             gap = 1;
         }
         swapped = false;
-        for (i = 0; i + gap < len; i++) {
+
+        for (i = 0; i + gap < a.length; i++) {
             if (a[i] > a[i + gap]) {
-                tmp = a[i];
-                a[i] = a[i + gap];
-                a[i + gap] = tmp;
+                util.swap(a, i, i + gap);
                 swapped = true;
             }
         }

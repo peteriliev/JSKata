@@ -50,12 +50,25 @@ describe('Array', function () {
 
     describe('cocktailSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            console.log(unsorted);
 
-            const cocktailSort = require('./CocktailSort');
-            cocktailSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const cocktailSort = require('./CocktailSort');
+
+                cocktailSort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
@@ -84,23 +97,49 @@ describe('Array', function () {
 
     describe('combSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            console.log(unsorted);
 
-            const combSort = require('./CombSort');
-            combSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const combSort = require('./CombSort');
+
+                combSort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
     describe('shellSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            console.log(unsorted);
 
-            const shellSort = require('./ShellSort');
-            shellSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const shellSort = require('./ShellSort');
+
+                shellSort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
