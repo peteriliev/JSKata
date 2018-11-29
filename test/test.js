@@ -232,6 +232,7 @@ describe('Array', function () {
     });
 
     describe('stoogeSort', function () {
+
         it('Array should be sorted', function () {
             var unsorted = [20, 18, 0, 19, -55, 0, 9320932, 55, 33, -40, 414, 413, 412, 400];
             console.log(unsorted);
@@ -242,38 +243,34 @@ describe('Array', function () {
         });
     });
 
-    /*
-    	describe('roman2Decimal', function() {
-    		it('Array should be sorted', function() {
-    			var romans = ['I', 'II', 'III', 'IV', 'V', 'IX', 'X', 'XI', 'XX', 'XXX', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'CM', 'M', 'MCMLIV', 'MCMXC', 'MMVIII'],
-    				decimals = [];
-    			console.log(romans);
+    describe('roman2Decimal', function () {
 
-    			const roman2Decimal = require('./roman2Decimal');
-    			for (var i = 0, len = romans.length; i < len; i++) {
-    				decimals.push(roman2Decimal(romans[i]));
-    			}
+        it('Array should be sorted', function () {
+            var romans = ['I', 'II', 'III', 'IV', 'V', 'IX', 'X', 'XI', 'XX', 'XXX', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'CM', 'M', 'MCMLIV', 'MCMXC', 'MMVIII'],
+                decimals = [1, 2, 3, 4, 5, 9, 10, 11, 20, 30, 40, 50, 90, 100, 400, 500, 900, 1000, 1954, 1990, 2008],
+                len = romans.length, i;
 
-    			console.log(decimals);
-    		});
-    	});
-    */
+            const roman2Decimal = require('./roman2Decimal');
 
-    /*
-    	describe('decimal2Roman', function() {
-    		it('Array should be sorted', function() {
-    			var decimals = [0, 1954, 1990, 2008],
-    				romans = [];
-    			console.log(decimals);
+            for (i = 0; i < len; i++) {
+                console.info('Roman = ' + romans[i] + ', decimal = ' + decimals[i]);
+                assert(roman2Decimal(romans[i]) === decimals[i]);
+            }
+        });
+    });
 
-    			const decimal2Roman = require('./Decimal2Roman');
-    			for (var i = 0, len = decimals.length; i < len; i++) {
-    				romans.push(decimal2Roman(decimals[i]));
-    			}
+    describe('decimal2Roman', function () {
+        it('Array should be sorted', function () {
+            var decimals = [0, 1954, 1990, 2008],
+                romans = ['', 'MCMLIV', 'MCMXC', 'MMVIII'],
+                len = decimals.length, i;
 
-    			console.log(romans);
-    		});
-    	});
-    */
+            const decimal2Roman = require('./Decimal2Roman');
 
+            for (var i = 0, len = decimals.length; i < len; i++) {
+                console.info('Decimal = ' + decimals[i] + ', roman = ' + romans[i]);
+                assert(decimal2Roman(decimals[i]) === romans[i]);
+            }
+        });
+    });
 });
