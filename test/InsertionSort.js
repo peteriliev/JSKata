@@ -2,19 +2,18 @@
 
 function sort(a) {
 
-    var len = a.length,
-        insertMe, index;
+    var index, insertMe, i;
 
-    for (var i = 1; i < len; i++) {
-        insertMe = a[i];
-        index = i - 1;
+    for (i = 1; i < a.length; i++) {
+
+        insertMe = a[i], index = i - 1;
+
         while (index >= 0 && a[index] > insertMe) {
             a[index + 1] = a[index];
             index--;
         }
-
         a[index + 1] = insertMe;
     }
 }
 
-module.exports = sort;
+exports.sort = sort;

@@ -1,34 +1,39 @@
 'use strict';
 
 function sort(a) {
-    var min = a.sort(function (a, b) { return a - b; })[0],
-        max = a.sort(function (a, b) { return b - a; })[0],
+    var min = a.sort(function (x, y) { return x - y; })[0],
+        max = a.sort(function (x, y) { return y - x; })[0],
         maxNormalized = max - min,
         maxLen = Math.floor(Math.log10(maxNormalized)) + 1,
-        buckets = [], bucket, i, j, k, significant, offset;
+        buckets = [],
+        len = a.length,
+        r,
+        sig,
+        i,
+        b,
+        snapshot;
 
-    for (i = 1; i <= maxLen; i++) {
-
-        for (j = 0; j < a.length; j++) {
-            significant = getSignificant(a[j] - min, i);
-            if (typeof buckets[significant] === 'undefined') {
-                buckets[significant] = [a[j]];
+    for (r = 1; r <= maxLen; r++) {
+        for (i = 0; i < len; i++) {
+            sig = getSignificant(a[i], r);
+            if (typeof buckets[sig] === 'undefined') {
+                buckets[sig] = [a[i]];
             } else {
-                buckets[significant].push(a[j]);
+                buckets[sig].push(a[i]);
             }
         }
 
-        offset = 0;
-        for (j = 0; j < 10; j++) {
-            bucket = buckets[j];
-            if (typeof buckets[j] === 'undefined') {
+        snapshot = 0;
+        for (b = 0; b < 10; b++) {
+            if (typeof buckets[b] === 'undefined') {
                 continue;
             }
 
-            for (k = 0; k < bucket.length; k++) {
-                a[offset++] = bucket[k];
+            for (i = 0; i < buckets[b].length; i++) {
+                a[snapshot++] = buckets[b][i];
             }
-            buckets[j] = [];
+
+            buckets[b] = [];
         }
     }
 }
@@ -39,4 +44,4 @@ function getSignificant(num, radix) {
     return Math.floor(num / divisor) % 10;
 }
 
-module.exports = sort;
+exports.sort = sort;

@@ -1,44 +1,48 @@
 'use strict';
-var swap = require('./Util');
 
-function MergeSort(a) {
-    MergeSortInternal(a, 0, a.length - 1);
+var util = require('./Util');
+
+function sort(a) {
+    sortInternal(a, 0, a.length - 1);
 }
 
-function MergeSortInternal(a, start, end) {
-    var len = end - start + 1;
+function sortInternal(a, start, end) {
+
+    var len = end - start + 1, middle = start + Math.floor(len / 2);
+
     if (len < 2) {
         return;
     }
 
-    var left = start,
-        right = end,
-        pivot = left;
+    sortInternal(a, start, middle - 1);
+    sortInternal(a, middle, end);
 
-    while (left < right) {
-        while (left < right && a[right] >= a[pivot]) {
-            right--;
-        }
+    merge(a, start, middle - 1, middle, end);
+}
 
-        if (left < right) {
-            swap(a, right, pivot);
-            pivot = right;
-            left++;
-        }
+function merge(a, start1, end1, start2, end2) {
+    var s1 = start1, s2 = start2, tmp = [], len = end2 - start1 + 1, i;
 
-        while (right > left && a[left] <= a[pivot]) {
-            left++;
-        }
+    for (i = 0; i < len; i++) {
 
-        if (right > left) {
-            swap(a, left, pivot);
-            pivot = left;
-            right++;
+        if (s1 > end1) {
+            tmp.push(a[s2++]);
+
+        } else if (s2 > end2) {
+            tmp.push(a[s1++]);
+
+        } else if (a[s1] < a[s2]) {
+            tmp.push(a[s1++]);
+
+        } else {
+            tmp.push(a[s2++]);
         }
     }
 
-    MergeSortInternal(a, start, pivot - 1);
-    MergeSortInternal(a, pivot + 1, end);
+    s1 = start1;
+    for (i = 0; i < len; i++) {
+        a[s1++] = tmp[i];
+    }
 }
 
-module.exports = MergeSort;
+exports.sort = sort;

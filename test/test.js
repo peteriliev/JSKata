@@ -28,23 +28,45 @@ describe('Array', function () {
 
     describe('insertionSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 19, 40, -13, 5, 4, 3, 19, 34, 9320932, -5];
-            console.log(unsorted);
 
-            const insertionSort = require('./InsertionSort');
-            insertionSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                require('./InsertionSort').sort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
     describe('selectionSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0];
-            console.log(unsorted);
 
-            const selectionSort = require('./SelectionSort');
-            selectionSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                require('./SelectionSort').sort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
@@ -73,25 +95,47 @@ describe('Array', function () {
     });
 
     describe('mergeSort', function () {
-        it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            console.log(unsorted);
 
-            const mergeSort = require('./MergeSort');
-            mergeSort(unsorted);
-            console.log(unsorted);
+        it('Array should be sorted', function () {
+
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                require('./MergeSort').sort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
     describe('quickSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            //var unsorted = [3, 0, -1, -2];
-            console.log(unsorted);
 
-            const quickSort = require('./QuickSort');
-            quickSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                require('./QuickSort').sort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
@@ -194,7 +238,7 @@ describe('Array', function () {
 
                 const radixSort = require('./RadixSort');
 
-                radixSort(set.unsorted);
+                radixSort.sort(set.unsorted);
 
                 console.log("\nSorted: " + set.unsorted);
 
@@ -234,12 +278,25 @@ describe('Array', function () {
     describe('stoogeSort', function () {
 
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, -55, 0, 9320932, 55, 33, -40, 414, 413, 412, 400];
-            console.log(unsorted);
 
-            const stoogeSort = require('./StoogeSort');
-            stoogeSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const stoogeSort = require('./StoogeSort');
+
+                stoogeSort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 

@@ -1,18 +1,24 @@
 'use strict';
 
-function bubbleSort(a) {
-    var len = a.length,
-        minIndex, swap = require('./Util');
-    for (var i = 0; i < len; i++) {
-        minIndex = i;
-        for (var j = i + 1; j < len; j++) {
-            if (a[j] < a[minIndex]) {
-                minIndex = j;
+var util = require('./Util');
+
+function swap(a) {
+    var last = a.length - 1, i, j, swapped;
+
+    for (i = last; i >= 0; i--) {
+        swapped = false;
+
+        for (j = last; j - 1 >= 0; j--) {
+            if (a[j] < a[j - 1]) {
+                util.swap(a, j, j - 1);
+                swapped = true;
             }
         }
 
-        swap(a, i, minIndex);
+        if (!swapped) {
+            break;
+        }
     }
 }
 
-module.exports = bubbleSort;
+module.exports = swap;

@@ -1,22 +1,20 @@
 'use strict';
+var util = require('./Util');
 
-function SelectionSort(a) {
-    var swapped, len = a.length, swap = require('./Util');
+function sort(a) {
+    var last = a.length - 1, i, j, maxIndex;
 
-    for (var i = len; i > 0; i--) {
-        swapped = false;
-        for (var j = 0; j + 1 < i; j++) {
-            if (a[j] > a[j + 1]) {
+    for (i = last; i > 0; i--) {
+        maxIndex = i;
 
-                swap(a, j, j + 1);
-                swapped = true;
+        for (j = i - 1; j >= 0; j--) {
+            if (a[j] > a[maxIndex]) {
+                maxIndex = j;
             }
         }
 
-        if (!swapped) {
-            break;
-        }
+        util.swap(a, i, maxIndex);
     }
 }
 
-module.exports = SelectionSort;
+exports.sort = sort;
