@@ -1,30 +1,28 @@
 'use strict';
 
 function convert(decimal) {
-
-    var result = '', tmp = decimal, i, key;
-    var map = [
-        { 1000: 'M' },
-        { 900: 'CM' },
-        { 500: 'D' },
-        { 400: 'CD' },
-        { 100: 'C' },
-        { 90: 'XC' },
-        { 50: 'L' },
-        { 40: 'XL' },
-        { 10: 'X' },
-        { 9: 'IX' },
-        { 5: 'V' },
-        { 4: 'IV' },
-        { 1: 'I' }
-    ];
+    var result = '', tmp = decimal, i, element,
+        map = [
+            ['M', 1000],
+            ['CM', 900],
+            ['D', 500],
+            ['CD', 400],
+            ['C', 100],
+            ['XC', 90],
+            ['L', 50],
+            ['XL', 40],
+            ['X', 10],
+            ['IX', 9],
+            ['V', 5],
+            ['IV', 4],
+            ['I', 1]
+        ];
 
     for (i = 0; i < map.length; i++) {
-        key = Object.keys(map[i])[0];
-
-        while (key <= tmp) {
-            result += map[i][key];
-            tmp -= key;
+        element = map[i];
+        while (tmp >= element[1]) {
+            result += element[0];
+            tmp -= element[1];
         }
     }
 

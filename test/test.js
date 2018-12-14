@@ -214,13 +214,25 @@ describe('Array', function () {
 
     describe('bucketSort', function () {
         it('Array should be sorted', function () {
-            var unsorted = [20, 18, 0, 19, 40, -13, 5, 4, 3, 19, 34, 0, 9320932, -55, 832, 17, 0, 44, 33];
-            //var unsorted = [5, 5, 4, 3, 1, 2, 1];
-            console.log(unsorted);
 
-            const bucketSort = require('./BucketSort');
-            bucketSort(unsorted);
-            console.log(unsorted);
+            var sets = helper.getTestSets(), set;
+
+            for (var i = 0; i < sets.length; i++) {
+
+                set = sets[i];
+
+                console.log("Unsorted: " + set.unsorted);
+
+                const bucketSort = require('./BucketSort');
+
+                bucketSort.sort(set.unsorted);
+
+                console.log("\nSorted: " + set.unsorted);
+
+                console.log("--------------------------------------------------------------------------------------------");
+
+                assert(helper.equalArrays(set.unsorted, set.sorted));
+            }
         });
     });
 
@@ -302,7 +314,7 @@ describe('Array', function () {
 
     describe('roman2Decimal', function () {
 
-        it('Array should be sorted', function () {
+        it('Romans converted', function () {
             var romans = ['I', 'II', 'III', 'IV', 'V', 'IX', 'X', 'XI', 'XX', 'XXX', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'CM', 'M', 'MCMLIV', 'MCMXC', 'MMVIII'],
                 decimals = [1, 2, 3, 4, 5, 9, 10, 11, 20, 30, 40, 50, 90, 100, 400, 500, 900, 1000, 1954, 1990, 2008],
                 len = romans.length, i;
@@ -310,14 +322,14 @@ describe('Array', function () {
             const roman2Decimal = require('./roman2Decimal');
 
             for (i = 0; i < len; i++) {
-                console.info('Roman = ' + romans[i] + ', decimal = ' + decimals[i]);
                 assert(roman2Decimal(romans[i]) === decimals[i]);
+                console.info('Roman = ' + romans[i] + ', decimal = ' + decimals[i]);
             }
         });
     });
 
     describe('decimal2Roman', function () {
-        it('Array should be sorted', function () {
+        it('Decimals converted', function () {
             var decimals = [0, 1954, 1990, 2008],
                 romans = ['', 'MCMLIV', 'MCMXC', 'MMVIII'],
                 len = decimals.length, i;
@@ -325,8 +337,8 @@ describe('Array', function () {
             const decimal2Roman = require('./Decimal2Roman');
 
             for (var i = 0, len = decimals.length; i < len; i++) {
-                console.info('Decimal = ' + decimals[i] + ', roman = ' + romans[i]);
                 assert(decimal2Roman(decimals[i]) === romans[i]);
+                console.info('Decimal = ' + decimals[i] + ', roman = ' + romans[i]);
             }
         });
     });

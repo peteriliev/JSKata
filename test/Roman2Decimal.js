@@ -10,21 +10,19 @@ function convert(roman) {
         'C': 100,
         'D': 500,
         'M': 1000
-    };
-    var i = 0, len = roman.length, tmp = 0, r, val, prev = Number.MAX_SAFE_INTEGER;
+    }, i, c, result = 0, current, previous = Number.MAX_SAFE_INTEGER;
 
-    for (i = 0; i < len; i++) {
-        r = roman.charAt(i);
-        val = map[r];
-        tmp += val;
-        if (val > prev) {
-            tmp -= 2 * prev;
+    for (i = 0; i < roman.length; i++) {
+        c = roman.charAt(i);
+        current = map[c];
+        result += current;
+        if (previous < current) {
+            result -= 2*previous;
         }
-        prev = val;
+        previous = current;
     }
 
-    return tmp;
-
+    return result;
 }
 
 module.exports = convert;

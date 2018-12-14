@@ -1,20 +1,15 @@
 'use strict';
-var swap = require('./Util');
 
-function BucketSort(a) {
-    var BUCKET_SIZE = 2,
-        i, b, len = a.length,
-        blen, offset, snapshot,
-        bucket, buckets = [],
-        targetBucket;
+var util = require('./Util');
 
-    var min = a.sort(function(a, b) {
-        return a - b;
-    })[0];
+function sort(a) {
+    var BUCKET_SIZE = 5,
+        min = a.sort(function (x, y) { return x - y; })[0],
+        buckets = [],
+        i, b, offset, len = a.length, targetBucket, snapshot;
 
-    a.sort(function(a, b) {
-        return b - a;
-    });
+    a.sort(function (x, y) { return y - x; });
+
 
     for (i = 0; i < len; i++) {
         targetBucket = Math.floor((a[i] - min) / BUCKET_SIZE);
@@ -25,32 +20,33 @@ function BucketSort(a) {
         }
     }
 
-    blen = buckets.length;
     offset = 0;
-    for (b = 0; b < blen; b++) {
-        if (typeof buckets[b] === 'undefined') {
+    for (i = 0; i < buckets.length; i++) {
+        if (typeof buckets[i] === 'undefined') {
             continue;
         }
-        bucket = buckets[b];
         snapshot = offset;
-        for (i = 0; i < bucket.length; i++) {
-            a[offset++] = bucket[i];
+        for (b = 0; b < buckets[i].length; b++) {
+            a[offset++] = buckets[i][b];
         }
-        InsertionSortInternal(a, snapshot, offset);
+        insertionSort(a, snapshot, offset);
     }
-    console.info('test');
 }
 
-function InsertionSortInternal(a, start, end) {
-    var i, index, insertMe;
+function insertionSort(a, start, end) {
+
+    var index, insertMe, i;
+
     for (i = start + 1; i < end; i++) {
         insertMe = a[i], index = i - 1;
-        while (index >= start && a[index] > insertMe) {
+        while (index >= 0 && a[index] > insertMe) {
             a[index + 1] = a[index];
             index--;
         }
+
         a[index + 1] = insertMe;
     }
+
 }
 
-module.exports = BucketSort;
+exports.sort = sort;
