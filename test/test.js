@@ -83,7 +83,7 @@ describe('Array', function () {
 
                 const cocktailSort = require('./CocktailSort');
 
-                cocktailSort(set.unsorted);
+                cocktailSort.sort(set.unsorted);
 
                 console.log("\nSorted: " + set.unsorted);
 
@@ -152,7 +152,7 @@ describe('Array', function () {
 
                 const combSort = require('./CombSort');
 
-                combSort(set.unsorted);
+                combSort.sort(set.unsorted);
 
                 console.log("\nSorted: " + set.unsorted);
 
@@ -176,7 +176,7 @@ describe('Array', function () {
 
                 const shellSort = require('./ShellSort');
 
-                shellSort(set.unsorted);
+                shellSort.sort(set.unsorted);
 
                 console.log("\nSorted: " + set.unsorted);
 
