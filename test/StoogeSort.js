@@ -2,11 +2,11 @@
 var util = require('./Util');
 
 function sort(a) {
-    sortInteral(a, 0, a.length - 1);
+    sortInternal(a, 0, a.length - 1);
 }
 
-function sortInteral(a, start, end) {
-    var len = end - start + 1, aThird = Math.floor(len / 3);
+function sortInternal(a, start, end) {
+    var len = end - start + 1;
     if (len < 2) {
         return;
     }
@@ -17,11 +17,10 @@ function sortInteral(a, start, end) {
         }
         return;
     }
-
-    sortInteral(a, start, end - aThird);
-    sortInteral(a, start + aThird, end);
-    sortInteral(a, start, end - aThird);
+    var aThird = Math.floor(len / 3);
+    sortInternal(a, start, end - aThird);
+    sortInternal(a, start + aThird, end);
+    sortInternal(a, start, end - aThird);
 }
-
 
 module.exports = sort;

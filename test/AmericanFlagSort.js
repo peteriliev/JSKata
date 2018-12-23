@@ -3,68 +3,71 @@
 var NUM_BUCKETS = 10;
 
 function sort(a) {
-    var min = a.sort(function (x, y) { return x - y; })[0], i, len = a.length;
-    var max = a.sort(function (x, y) { return y - x; })[0],
-        maxNormalized = max - min,
-        maxLen = Math.floor(Math.log10(maxNormalized)) + 1;
+    var min = a.sort(function (x, y) { return x - y; })[0];
+    var max = a.sort(function (x, y) { return y - x; })[0];
+    var maxNormalized = max - min;
+    var maxLen = Math.floor(Math.log10(maxNormalized)) + 1;
+    var i;
 
-    for (i = 0; i < len; i++) {
+    for (i = 0; i < a.length; i++) {
         a[i] -= min;
     }
 
-    sortInternal(a, 0, a.length, Math.pow(NUM_BUCKETS, maxLen - 1));
+    sortInternal(a, 0, a.length, maxLen);
 
-    for (i = 0; i < len; i++) {
+    for (i = 0; i < a.length; i++) {
         a[i] += min;
     }
 }
 
-function sortInternal(a, start, end, divisor) {
-    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], offsets = [], b, i;
-    var num, significant, from, offset, to, tmp, s, e;
+function sortInternal(a, start, end, position) {
+    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], offsets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], i, digit, s, e, from, to, tmp, num, offset;
 
     for (i = start; i < end; i++) {
-        significant = getSignificant(a[i], divisor);
-        counts[significant]++;
+        digit = getDigit(a[i], position);
+        counts[digit]++;
     }
+
     offsets[0] = start;
+
     for (i = 1; i < NUM_BUCKETS; i++) {
         offsets[i] = offsets[i - 1] + counts[i - 1];
     }
 
-    for (b = 0; b < NUM_BUCKETS; b++) {
-        while (counts[b] > 0) {
-            offset = offsets[b], from = offset; num = a[from];
+    for (i = 0; i < NUM_BUCKETS; i++) {
+        while (counts[i] > 0) {
+            offset = offsets[i], num = a[offset];
 
             do {
-
-                significant = getSignificant(num, divisor);
-                to = offsets[significant];
+                digit = getDigit(num, position);
+                to = offsets[digit];
                 tmp = a[to];
 
-                counts[significant]--;
-                offsets[significant]++;
+                counts[digit]--;
+                offsets[digit]++;
 
                 a[to] = num;
                 num = tmp;
-                from = to;
-            } while (from !== offset);
+            } while (to !== offset);
         }
     }
 
-    if (divisor > 1) {
-        for (b = 0; b < NUM_BUCKETS; b++) {
-            s = b === 0 ? start : offsets[b - 1];
-            e = offsets[b];
+    if (position > 1) {
+        for (i = 0; i < NUM_BUCKETS; i++) {
+            s = i === 0 ? start : offsets[i - 1];
+            e = offsets[i];
             if (e - s > 1) {
-                sortInternal(a, s, e, divisor / NUM_BUCKETS);
+                sortInternal(a, s, e, position - 1);
             }
         }
     }
 }
 
-function getSignificant(number, divisor) {
-    return Math.floor(number / divisor) % NUM_BUCKETS;
+function getDigit(num, position) {
+
+    var divisor = Math.pow(NUM_BUCKETS, position - 1);
+
+    return Math.floor(num / divisor) % NUM_BUCKETS;
 }
 
 module.exports = sort;
