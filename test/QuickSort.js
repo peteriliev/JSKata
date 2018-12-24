@@ -7,30 +7,30 @@ function sort(a) {
 }
 
 function sortInternal(a, start, end) {
-
-    var left = start, right = end, pivot = left, pivotVal = a[pivot];
-
-    if (start >= end) {
+    var len = end - start + 1;
+    if (len < 2) {
         return;
     }
 
+    var left = start, right = end, pivot = left;
+
     while (left < right) {
-        while (right > left && a[right] >= pivotVal) {
+        while (a[right] >= a[pivot]) {
             right--;
         }
 
         if (right > left) {
-            util.swap(a, pivot, right);
+            util.swap(a, right, pivot);
             pivot = right;
             left++;
         }
 
-        while (left < right && a[left] <= pivotVal) {
+        while (a[left] <= a[pivot]) {
             left++;
         }
 
         if (left < right) {
-            util.swap(a, pivot, left);
+            util.swap(a, left, pivot);
             pivot = left;
             right--;
         }
