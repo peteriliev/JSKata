@@ -3,18 +3,16 @@
 var util = require('./Util');
 
 function swap(a) {
-    var last = a.length - 1, i, j, swapped;
+    var i, swapped, j, len = a.length;
 
-    for (i = last; i >= 0; i--) {
+    for (j = len; j > 0; j--) {
         swapped = false;
-
-        for (j = last; j - 1 >= 0; j--) {
-            if (a[j] < a[j - 1]) {
-                util.swap(a, j, j - 1);
+        for (i = 0; i + 1 < j; i++) {
+            if (a[i] > a[i + 1]) {
+                util.swap(a, i, i + 1);
                 swapped = true;
             }
         }
-
         if (!swapped) {
             break;
         }
