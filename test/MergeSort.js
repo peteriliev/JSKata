@@ -7,11 +7,12 @@ function sort(a) {
 }
 
 function sortInternal(a, start, end) {
-    var len = end - start + 1;
+    var len = end - start + 1,
+        middle = start + Math.floor(len / 2);
+
     if (len < 2) {
         return;
     }
-    var middle = start + Math.floor(len / 2);
 
     sortInternal(a, start, middle - 1);
     sortInternal(a, middle, end);
@@ -20,12 +21,11 @@ function sortInternal(a, start, end) {
 }
 
 function merge(a, start1, end1, start2, end2) {
-    var s1 = start1, s2 = start2, tmp = [], i, len = end2 - start1 + 1;
+    var len = end2 - start1 + 1, s1 = start1, s2 = start2, tmp = [], i;
 
     for (i = 0; i < len; i++) {
-
         if (s1 > end1) {
-            tmp[i] = a[s2++];
+            tmp[i] = a[s2++]
         } else if (s2 > end2) {
             tmp[i] = a[s1++];
         } else if (a[s1] < a[s2]) {
@@ -34,8 +34,8 @@ function merge(a, start1, end1, start2, end2) {
             tmp[i] = a[s2++];
         }
     }
-    s1 = start1;
 
+    s1 = start1;
     for (i = 0; i < len; i++) {
         a[s1++] = tmp[i];
     }

@@ -15,7 +15,7 @@ function sortInternal(a, start, end) {
     var left = start, right = end, pivot = left;
 
     while (left < right) {
-        while (a[right] >= a[pivot]) {
+        while (right > left && a[right] >= a[pivot]) {
             right--;
         }
 
@@ -25,7 +25,7 @@ function sortInternal(a, start, end) {
             left++;
         }
 
-        while (a[left] <= a[pivot]) {
+        while (left < right && a[left] <= a[pivot]) {
             left++;
         }
 
