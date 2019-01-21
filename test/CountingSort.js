@@ -2,27 +2,26 @@
 
 function CountingSort(a) {
 
-    var min = a.sort(function (x, y) { return x - y; })[0],
-        max = a.sort(function (x, y) { return y - x; })[0];
+    var min = a.sort(function (a, b) { return a - b; })[0];
+    var max = a.sort(function (a, b) { return b - a; })[0];
+    var counts = [];
 
-    var counts = [], i, numNormalized;
+    for (var i = 0; i < a.length; i++) {
 
-    for (i = 0; i < a.length; i++) {
-        numNormalized = a[i] - min;
-        if (typeof counts[numNormalized] === 'undefined') {
-            counts[numNormalized] = 1;
+        if (typeof counts[a[i] - min] === 'undefined') {
+            counts[a[i] - min] = 1;
         } else {
-            counts[numNormalized]++;
+            counts[a[i] - min]++;
         }
     }
 
-    var offset = 0;
+    var snapshot = 0;
     for (i = 0; i < counts.length; i++) {
         if (typeof counts[i] === 'undefined') {
             continue;
         }
-        a.fill(i + min, offset, offset + counts[i]);
-        offset += counts[i];
+        a.fill(i + min, snapshot, snapshot + counts[i]);
+        snapshot += counts[i];
     }
 }
 

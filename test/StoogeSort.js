@@ -17,7 +17,9 @@ function sortInternal(a, start, end) {
         }
         return;
     }
+
     var aThird = Math.floor(len / 3);
+
     sortInternal(a, start, end - aThird);
     sortInternal(a, start + aThird, end);
     sortInternal(a, start, end - aThird);
