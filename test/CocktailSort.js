@@ -3,12 +3,12 @@
 var util = require('./Util');
 
 function sort(a) {
-    var left = 0, right = a.length, swapped, i;
+    var i, start = 0, end = a.length, swapped;
 
-    while (left < right - 1) {
+    while (start < end - 1) {
+        console.info('Start/end = ' + start + '/' + end);
         swapped = false;
-
-        for (i = left; i + 1 < right; i++) {
+        for (i = start; i + 1 < end; i++) {
             if (a[i] > a[i + 1]) {
                 util.swap(a, i, i + 1);
                 swapped = true;
@@ -17,19 +17,20 @@ function sort(a) {
         if (!swapped) {
             break;
         }
-        right--;
+        end--;
 
         swapped = false;
-        for (i = right - 1; i - 1 >= left; i--) {
+        for (i = end - 1; i - 1 >= start; i--) {
             if (a[i] < a[i - 1]) {
                 util.swap(a, i, i - 1);
                 swapped = true;
             }
         }
+
         if (!swapped) {
             break;
         }
-        left++;
+        start++;
     }
 }
 
