@@ -2,21 +2,22 @@
 
 var util = require('./Util');
 
-function swap(a) {
-    var i, swapped, j, len = a.length;
+function sort(a) {
+    var swapped, i, j;
 
-    for (j = len; j > 0; j--) {
+    for (i = 0; i < a.length; i++) {
         swapped = false;
-        for (i = 0; i + 1 < j; i++) {
-            if (a[i] > a[i + 1]) {
-                util.swap(a, i, i + 1);
+        for (j = a.length - 1; j - 1 >= i; j--) {
+            if (a[j] < a[j - 1]) {
+                util.swap(a, j, j - 1);
                 swapped = true;
             }
         }
+
         if (!swapped) {
             break;
         }
     }
 }
 
-module.exports = swap;
+exports.sort = sort;

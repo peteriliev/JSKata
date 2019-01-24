@@ -15,7 +15,7 @@ describe('Array', function () {
 
                 console.log("Unsorted: " + set.unsorted);
 
-                require('./BubbleSort')(set.unsorted);
+                require('./BubbleSort').sort(set.unsorted);
 
                 console.log("\nSorted: " + set.unsorted);
 
