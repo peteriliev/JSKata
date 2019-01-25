@@ -7,12 +7,11 @@ function sort(a) {
 }
 
 function sortInternal(a, start, end) {
-    var len = end - start + 1;
-    if (len < 2) {
+    var left = start, right = end, pivot = left;
+
+    if (start >= end) {
         return;
     }
-
-    var left = start, right = end, pivot = left;
 
     while (left < right) {
         while (right > left && a[right] >= a[pivot]) {
@@ -25,7 +24,7 @@ function sortInternal(a, start, end) {
             left++;
         }
 
-        while (left < right && a[left] <= a[pivot]) {
+        while (left < right && a[left] < a[pivot]) {
             left++;
         }
 
