@@ -1,43 +1,46 @@
 'use strict';
 
 function sort(a) {
+    var min = a.sort(function (a, b) { return a - b; })[0],
+        max = a.sort(function (a, b) { return b - a; })[0],
+        maxNormalized = max - min,
+        maxLen = Math.floor(Math.log10(maxNormalized)) + 1,
+        i, len = a.length,
+        buckets = [], bucket, b, digit, index;
 
-    var min = a.sort(function (x, y) { return x - y; })[0],
-        max = a.sort(function (x, y) { return y - x; })[0];
+    for (var r = 1; r <= maxLen; r++) {
 
-    var maxNormalized = max - min,
-        maxLen = Math.floor(Math.log10(maxNormalized)) + 1;
-
-    var buckets = [], r, bucket, i, j, offset, digit;
-
-    for (r = 1; r <= maxLen; r++) {
-        for (i = 0; i < a.length; i++) {
+        for (i = 0; i < len; i++) {
             digit = getDigit(a[i] - min, r);
+
             if (typeof buckets[digit] === 'undefined') {
                 buckets[digit] = [a[i]];
             } else {
                 buckets[digit].push(a[i]);
             }
         }
-        offset = 0;
-        for (i = 0; i < buckets.length; i++) {
+
+        index = 0;
+        for (i = 0; i < 10; i++) {
             bucket = buckets[i];
+
             if (typeof bucket === 'undefined') {
                 continue;
             }
 
-            for (j = 0; j < bucket.length; j++) {
-                a[offset++] = bucket[j];
+            for (b = 0; b < bucket.length; b++) {
+                a[index++] = bucket[b];
             }
+
             buckets[i] = [];
         }
-
     }
 }
 
-function getDigit(num, position) {
+function getDigit(number, position) {
     var divisor = Math.pow(10, position - 1);
-    return Math.floor(num / divisor) % 10;
+
+    return Math.floor(number / divisor) % 10;
 }
 
 exports.sort = sort;

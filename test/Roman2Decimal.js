@@ -1,7 +1,6 @@
 'use strcit';
 
 function convert(roman) {
-
     var map = {
         'I': 1,
         'V': 5,
@@ -10,16 +9,18 @@ function convert(roman) {
         'C': 100,
         'D': 500,
         'M': 1000
-    }, i, c, result = 0, current, previous = Number.MAX_SAFE_INTEGER;
+    };
 
-    for (i = 0; i < roman.length; i++) {
+    var result = 0, c, num, prev = Number.MAX_SAFE_INTEGER;
+
+    for (var i = 0; i < roman.length; i++) {
         c = roman.charAt(i);
-        current = map[c];
-        result += current;
-        if (previous < current) {
-            result -= 2*previous;
+        num = map[c];
+        result += num;
+        if (prev < num) {
+            result -= (2 * prev);
         }
-        previous = current;
+        prev = num;
     }
 
     return result;
