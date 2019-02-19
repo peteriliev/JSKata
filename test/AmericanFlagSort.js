@@ -3,14 +3,10 @@
 var NUM_BUCKETS = 10;
 
 function sort(a) {
-
     var min = a.sort(function (a, b) { return a - b; })[0];
     var max = a.sort(function (a, b) { return b - a; })[0];
-
-    var i,
-        len = a.length,
-        maxNormalized = max - min,
-        maxLen = Math.floor(Math.log10(maxNormalized)) + 1;
+    var maxNormalized = max - min;
+    var i, len = a.length, maxLen = Math.floor(Math.log10(maxNormalized)) + 1;
 
     for (i = 0; i < len; i++) {
         a[i] -= min;
@@ -24,34 +20,37 @@ function sort(a) {
 }
 
 function sortInternal(a, start, end, position) {
-    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], i, d, digit, offsets = [start];
-    var offset, from, to, tmp, digit, number, s, e;
+
+    var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], offsets = [], i, digit, d;
+    var offset, from, tmp, to, num, s, e;
 
     for (i = start; i < end; i++) {
         digit = getDigit(a[i], position);
         counts[digit]++;
     }
 
+    offsets[0] = start;
     for (i = 1; i < NUM_BUCKETS; i++) {
         offsets[i] = offsets[i - 1] + counts[i - 1];
     }
 
     for (d = 0; d < NUM_BUCKETS; d++) {
+
         while (counts[d] > 0) {
-            offset = offsets[d], from = offset, number = a[from];
+            offset = offsets[d], from = offset, num = a[from];
 
             do {
-                digit = getDigit(number, position);
+                digit = getDigit(num, position);
                 to = offsets[digit];
                 tmp = a[to];
 
                 offsets[digit]++;
                 counts[digit]--;
 
-                a[to] = number;
+                a[to] = num;
+                num = tmp;
                 from = to;
-                number = tmp;
-            } while (from !== offset);
+            } while (offset !== from);
         }
     }
 
@@ -67,9 +66,10 @@ function sortInternal(a, start, end, position) {
 }
 
 function getDigit(number, position) {
-    var divisor = Math.pow(NUM_BUCKETS, position - 1);
 
-    return Math.floor(number / divisor) % NUM_BUCKETS;
+    var divisor = Math.pow(10, position - 1);
+
+    return Math.floor(number / divisor) % 10;
 }
 
 module.exports = sort;

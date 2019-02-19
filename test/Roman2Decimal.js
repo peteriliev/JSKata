@@ -10,17 +10,18 @@ function convert(roman) {
         'D': 500,
         'M': 1000
     };
+    var _char, current, result = 0, previous = Number.MAX_SAFE_INTEGER, current;
 
-    var result = 0, c, num, prev = Number.MAX_SAFE_INTEGER;
+    for (var c = 0; c < roman.length; c++) {
+        _char = roman.charAt(c);
+        current = map[_char];
+        result += current;
 
-    for (var i = 0; i < roman.length; i++) {
-        c = roman.charAt(i);
-        num = map[c];
-        result += num;
-        if (prev < num) {
-            result -= (2 * prev);
+        if (current > previous) {
+            result -= 2 * previous;
         }
-        prev = num;
+
+        previous = current;
     }
 
     return result;

@@ -2,26 +2,29 @@
 
 function CountingSort(a) {
 
-    var min = a.sort(function (a, b) { return a - b; })[0];
-    var max = a.sort(function (a, b) { return b - a; })[0];
-    var counts = [];
+    var len = a.length,
+        i,
+        min = a.sort(function (a, b) { return a - b; })[0],
+        max = a.sort(function (a, b) { return b - a; })[0],
+        counts = [], num, offset;
 
-    for (var i = 0; i < a.length; i++) {
-
-        if (typeof counts[a[i] - min] === 'undefined') {
-            counts[a[i] - min] = 1;
+    for (i = 0; i < len; i++) {
+        num = a[i] - min;
+        if (typeof counts[num] === 'undefined') {
+            counts[num] = 1;
         } else {
-            counts[a[i] - min]++;
+            counts[num]++;
         }
     }
-
-    var snapshot = 0;
+    //console.info('counts = ' + counts);
+    offset = 0;
     for (i = 0; i < counts.length; i++) {
         if (typeof counts[i] === 'undefined') {
             continue;
         }
-        a.fill(i + min, snapshot, snapshot + counts[i]);
-        snapshot += counts[i];
+
+        a.fill(i + min, offset, offset + counts[i]);
+        offset += counts[i];
     }
 }
 
