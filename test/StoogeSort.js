@@ -2,27 +2,30 @@
 var util = require('./Util');
 
 function sort(a) {
-    sortInternal(a, 0, a.length - 1);
+
+    sortInternal(a, 0, a.length);
 }
 
 function sortInternal(a, start, end) {
-    var len = end - start + 1;
+
+    var len = end - start, aThird = Math.floor(len / 3);
+
     if (len < 2) {
         return;
     }
 
     if (len === 2) {
-        if (a[start] > a[end]) {
-            util.swap(a, start, end);
+        if (a[start] > a[start + 1]) {
+            util.swap(a, start, start + 1);
         }
+
         return;
     }
 
-    var aThird = Math.floor(len / 3);
-
-    sortInternal(a, start, end - aThird);
     sortInternal(a, start + aThird, end);
     sortInternal(a, start, end - aThird);
+    sortInternal(a, start + aThird, end);
+    //sortInternal(a, start, end - aThird);
 }
 
 module.exports = sort;
