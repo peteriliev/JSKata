@@ -1,7 +1,7 @@
 'use strict';
 
 function getTestSets() {
-    var result = [getEmptySet(), getSingleSet()];
+    var result = [getEmptySet(), getSingleSet(), getSpecialSet()];
 
     for (var i = 0; i < 5; i++) {
         result.push(generateSet());
@@ -12,6 +12,10 @@ function getTestSets() {
 
 function getEmptySet() {
     return { 'sorted': [], 'unsorted': [] };
+}
+
+function getSpecialSet() {
+    return { 'sorted': [0, 1, 2], 'unsorted': [2, 1, 0] };
 }
 
 function getSingleSet() {

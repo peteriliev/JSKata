@@ -3,13 +3,14 @@
 var util = require('./Util');
 
 function sort(a) {
-    var min = a.sort(function (a, b) { return a - b; })[0];
-    var max = a.sort(function (a, b) { return b - a; })[0];
-    var buckets = [], bucket = [], i, len = a.length, targetBucket, BUCKET_SIZE = 3, b, offset, snapshot;
+
+    var b, len = a.length, buckets = [], BUCKET_SIZE = 4, i,
+        min = a.sort(function (a, b) { return a - b; })[0],
+        max = a.sort(function (a, b) { return b - a; })[0],
+        targetBucket, offset, snapshot;
 
     for (i = 0; i < len; i++) {
         targetBucket = Math.floor((a[i] - min) / BUCKET_SIZE);
-
         if (typeof buckets[targetBucket] === 'undefined') {
             buckets[targetBucket] = [a[i]];
         } else {
@@ -18,32 +19,32 @@ function sort(a) {
     }
 
     offset = 0;
-    for (b = 0; b < buckets.length; b++) {
-        bucket = buckets[b];
-        if (typeof bucket === 'undefined') {
+    for (i = 0; i < buckets.length; i++) {
+        if (typeof buckets[i] === 'undefined') {
             continue;
         }
+
         snapshot = offset;
-        for (i = 0; i < bucket.length; i++) {
-            a[offset++] = bucket[i];
+        for (b = 0; b < buckets[i].length; b++) {
+            a[offset++] = buckets[i][b];
         }
 
         insertionSort(a, snapshot, offset);
     }
-
 }
 
 function insertionSort(a, start, end) {
-    var i, index, insertMe;
+    var index, i, inserMe;
 
     for (i = start + 1; i < end; i++) {
-        insertMe = a[i];
+        inserMe = a[i];
         index = i - 1;
-        while (index >= start && a[index] > insertMe) {
+        while (index >= start && a[index] > inserMe) {
             a[index + 1] = a[index];
             index--;
         }
-        a[index + 1] = insertMe;
+
+        a[index + 1] = inserMe;
     }
 }
 
