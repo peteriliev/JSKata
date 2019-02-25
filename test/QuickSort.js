@@ -3,18 +3,24 @@
 var util = require('./Util');
 
 function sort(a) {
+
     sortInternal(a, 0, a.length - 1);
 }
 
 function sortInternal(a, start, end) {
-    var left = start, right = end, pivot = left;
 
-    if (start >= end) {
+    var i,
+        left = start,
+        right = end,
+        len = end - start + 1,
+        pivot = left;
+
+    if (len < 2) {
         return;
     }
 
     while (left < right) {
-        while (right > left && a[right] >= a[pivot]) {
+        while (right >= left && a[right] >= a[pivot]) {
             right--;
         }
 
@@ -24,7 +30,7 @@ function sortInternal(a, start, end) {
             left++;
         }
 
-        while (left < right && a[left] < a[pivot]) {
+        while (left <= right && a[left] <= a[pivot]) {
             left++;
         }
 
@@ -35,8 +41,8 @@ function sortInternal(a, start, end) {
         }
     }
 
-    sortInternal(a, start, pivot - 1);
     sortInternal(a, pivot + 1, end);
+    sortInternal(a, start, pivot - 1);
 }
 
 exports.sort = sort;
