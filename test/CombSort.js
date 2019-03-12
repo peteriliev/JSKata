@@ -3,21 +3,23 @@
 var util = require('./Util');
 
 function sort(a) {
-    var i, len = a.length, gap = len, swapped = false;
+    var gap = a.length, swapped = false, i;
 
-    while (swapped || gap > 1) {
+    while (gap > 1 || swapped) {
+
         swapped = false;
         gap = Math.floor(gap / 1.3);
         if (gap < 1) {
             gap = 1;
         }
 
-        for (i = 0; i + gap < len; i++) {
+        for (i = 0; i + gap < a.length; i++) {
             if (a[i] > a[i + gap]) {
                 util.swap(a, i, i + gap);
                 swapped = true;
             }
         }
+
     }
 }
 

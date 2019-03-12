@@ -2,18 +2,20 @@
 var util = require('./Util');
 
 function sort(a) {
+
     var i, j, len = a.length, minIndex;
 
-    for (j = 0; j < len; j++) {
-        minIndex = j;
+    for (i = 0; i < len - 1; i++) {
 
-        for (i = j + 1; i < len; i++) {
-            if (a[i] < a[minIndex]) {
-                minIndex = i;
+        minIndex = i;
+
+        for (j = i + 1; j < len; j++) {
+            if (a[j] < a[minIndex]) {
+                minIndex = j;
             }
         }
 
-        util.swap(a, j, minIndex);
+        util.swap(a, i, minIndex);
     }
 }
 

@@ -3,13 +3,13 @@
 var util = require('./Util');
 
 function sort(a) {
-    var i, len = a.length, j, swapped;
+    var i, j, swapped, len = a.length;
 
-    for (j = len; j > 0; j--) {
+    for (i = 0; i < len; i++) {
         swapped = false;
-        for (i = 0; i + 1 < j; i++) {
-            if (a[i] > a[i + 1]) {
-                util.swap(a, i, i + 1);
+        for (j = len - 1; j - 1 >= i; j--) {
+            if (a[j] < a[j - 1]) {
+                util.swap(a, j, j - 1);
                 swapped = true;
             }
         }

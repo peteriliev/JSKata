@@ -1,11 +1,12 @@
 'use strict';
 
 function sort(a) {
-    var i, insertMe, index;
+    var index, insertMe, i, len;
+    len = a.length;
 
-    for (i = 1; i < a.length; i++) {
-        index = i - 1;
+    for (i = 1; i < len; i++) {
         insertMe = a[i];
+        index = i - 1;
         while (index >= 0 && a[index] > insertMe) {
             a[index + 1] = a[index];
             index--;
