@@ -1,27 +1,22 @@
 'use strcit';
 
 function convert(roman) {
-    var map = {
-        'I': 1,
-        'V': 5,
-        'X': 10,
-        'L': 50,
-        'C': 100,
-        'D': 500,
-        'M': 1000
-    };
-    var _char, current, result = 0, previous = Number.MAX_SAFE_INTEGER, current;
 
-    for (var c = 0; c < roman.length; c++) {
-        _char = roman.charAt(c);
-        current = map[_char];
-        result += current;
+    var map = { 'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000 };
 
-        if (current > previous) {
+    var i, len = roman.length, c, previous = Number.MAX_SAFE_INTEGER, val, result = 0;
+
+    for (i = 0; i < len; i++) {
+
+        c = roman.charAt(i);
+        val = map[c];
+        result += val;
+
+        if (val > previous) {
             result -= 2 * previous;
         }
 
-        previous = current;
+        previous = val;
     }
 
     return result;
