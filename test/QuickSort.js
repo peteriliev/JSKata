@@ -9,18 +9,14 @@ function sort(a) {
 
 function sortInternal(a, start, end) {
 
-    var i,
-        left = start,
-        right = end,
-        len = end - start + 1,
-        pivot = left;
-
-    if (len < 2) {
+    if (start >= end) {
         return;
     }
 
+    var left = start, right = end, pivot = left;
+
     while (left < right) {
-        while (right >= left && a[right] >= a[pivot]) {
+        while (right > left && a[right] >= a[pivot]) {
             right--;
         }
 
@@ -30,7 +26,7 @@ function sortInternal(a, start, end) {
             left++;
         }
 
-        while (left <= right && a[left] <= a[pivot]) {
+        while (left < right && a[left] <= a[pivot]) {
             left++;
         }
 
@@ -41,8 +37,8 @@ function sortInternal(a, start, end) {
         }
     }
 
-    sortInternal(a, pivot + 1, end);
     sortInternal(a, start, pivot - 1);
+    sortInternal(a, pivot + 1, end);
 }
 
 exports.sort = sort;
