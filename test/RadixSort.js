@@ -2,15 +2,16 @@
 
 function sort(a) {
 
-    var min = a.sort(function (a, b) { return a - b; })[0],
+    var i, r, digit, b, bucket, offset,
+        len = a.length,
+        buckets = [],
+        min = a.sort(function (a, b) { return a - b; })[0],
         max = a.sort(function (a, b) { return b - a; })[0],
-        maxNormalized = max - min,
-        maxLen = Math.floor(Math.log10(maxNormalized)) + 1,
-        i, r, b, digit, offset,
-        buckets = [];
+        maxLen = Math.floor(Math.log10(max)) + 1;
 
     for (r = 1; r <= maxLen; r++) {
-        for (i = 0; i < a.length; i++) {
+
+        for (i = 0; i < len; i++) {
             digit = getDigit(a[i] - min, r);
 
             if (typeof buckets[digit] === 'undefined') {
@@ -22,12 +23,13 @@ function sort(a) {
 
         offset = 0;
         for (b = 0; b < buckets.length; b++) {
-            if (typeof buckets[b] === 'undefined') {
+            bucket = buckets[b];
+            if (typeof bucket === 'undefined') {
                 continue;
             }
 
-            for (i = 0; i < buckets[b].length; i++) {
-                a[offset++] = buckets[b][i];
+            for (i = 0; i < bucket.length; i++) {
+                a[offset++] = bucket[i];
             }
             buckets[b] = [];
         }
@@ -35,6 +37,7 @@ function sort(a) {
 }
 
 function getDigit(num, position) {
+
     var divisor = Math.pow(10, position - 1);
 
     return Math.floor(num / divisor) % 10;
